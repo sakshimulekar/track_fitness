@@ -5,12 +5,11 @@ from rest_framework.response import Response
 from .serializers import CustomUserSerializer
 from django.contrib.auth import login, authenticate
 from rest_framework import viewsets
-from .models import UserProfile,TrainerProfile,Exercise,FitnessPlan
-from .serializers import UserProfileSerializer,TrainerProfileSerializer,ExerciseSerializer,FitnessPlanSerializer
-from .permissions import IsOwnerOrReadOnly  # Import the custom permission
+from .models import UserProfile,TrainerProfile,Exercise,FitnessPlan,WorkoutPlan
+from .serializers import UserProfileSerializer,TrainerProfileSerializer,ExerciseSerializer,FitnessPlanSerializer,WorkoutPlanSerializer
+from .permissions import IsOwnerOrReadOnly,IsOwnerOrReadOnlyPlan  # Import the custom permission
 from .permissions import IsOwnerOrReadOnlyTrainer  # Import trainer permissions
 #from .filters import RoleFilter, TrainerRoleFilter  # Import the filter classes
-
 
 @api_view(['POST'])
 def register_user(request):
@@ -126,3 +125,16 @@ class DeleteExerciseFromFitnessPlan(APIView):
         
         serializer = FitnessPlanSerializer(fitness_plan)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+
+ # You'll need to create this permission class
+
+class WorkoutPlanViewSet(viewsets.ModelViewSet):
+    serializer_class = WorkoutPlanSerializer
+    permission_classes = [IsOwnerOrReadOnlyPlan]  # Implement this permission class to restrict access
+
+    def get_queryset(self):
+        queryset = WorkoutPlan.objects.all()
+        # Modify the queryset to filter by trainer, subscribed plans, etc., as needed
+        return queryset

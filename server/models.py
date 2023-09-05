@@ -54,6 +54,8 @@ class Exercise(models.Model):
     image = models.URLField()
     name = models.CharField(max_length=100)
     sets = models.PositiveIntegerField()
+    min = models.PositiveIntegerField(default=0)
+    description = models.TextField(max_length=1000,default="No description available")
 
 class FitnessPlan(models.Model):
     name = models.CharField(max_length=100)
@@ -70,7 +72,7 @@ class WorkoutPlan(models.Model):
     goal = models.CharField(max_length=50)  # You can use choices for predefined goals
     duration = models.PositiveIntegerField()  # Duration in weeks
     fitness_plan = models.ForeignKey(FitnessPlan, on_delete=models.SET_NULL, null=True, blank=True)  # Store exercises as a JSON array
-
+    price=models.PositiveIntegerField(default=0)
     trainer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Trainer who created the plan
     users = models.ManyToManyField(CustomUser, related_name='subscribed_plans', blank=True)  # Users subscribed to the plan
 

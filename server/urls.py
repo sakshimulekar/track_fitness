@@ -1,13 +1,14 @@
 from django.urls import path,include
 from . import views
 from rest_framework.routers import DefaultRouter
-from .views import UserProfileViewSet,TrainerProfileViewSet,ExerciseViewSet,FitnessPlanViewSet,AddExerciseToFitnessPlan,DeleteExerciseFromFitnessPlan,UpdateExerciseInFitnessPlan
+from .views import UserProfileViewSet,TrainerProfileViewSet,ExerciseViewSet,FitnessPlanViewSet,AddExerciseToFitnessPlan,DeleteExerciseFromFitnessPlan,UpdateExerciseInFitnessPlan,WorkoutPlanViewSet
 
 router = DefaultRouter()
 router.register(r'user-profiles', UserProfileViewSet, basename='user-profile')
 router.register(r'trainer-profiles', TrainerProfileViewSet, basename='trainer-profile')
 router.register(r'exercises', ExerciseViewSet)
 router.register(r'fitnessplans', FitnessPlanViewSet)
+router.register(r'workout-plans', WorkoutPlanViewSet,basename='workout-plan')
 urlpatterns = [
     path('api/', include(router.urls)),
     path('api/register/', views.register_user, name='register_user'),

@@ -16,6 +16,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
+
+
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
